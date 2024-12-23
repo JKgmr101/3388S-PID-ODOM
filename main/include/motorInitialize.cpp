@@ -13,4 +13,6 @@ pros::adi::DigitalOut mogo('A');
 pros::adi::DigitalOut doinker('B');
 pros::adi::DigitalOut intakePison('C');
 
-pros::Rotation vs(15);
+pros::Rotation verticalTracking(15);
+
+pros::Rotation horizontalTracking(15);
