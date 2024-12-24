@@ -1,33 +1,6 @@
 #include "main.h"
 
-float exponentialInputRemap(float input, float scale) {
-    if (scale != 0) {
-        return (powf(2.718, -(scale / 10)) + powf(2.718, (fabs(input) - 127) / 10) * (1 - powf(2.718, -(scale / 10)))) * input;
-    }
-    return input;
-}
-
-int sign(int num){
-    return (num >= 0) ? 1 : -1;
-}
-
-
-void Chassis::arcade(int throttle, int angular){
-    int deadzone = 5;
-
-    throttle = (abs(throttle) <= deadzone) ? 0 : throttle;
-    angular = (abs(angular) <= deadzone) ? 0 : angular;
-
-    throttle =  exponentialInputRemap(throttle, 7.5);
-
-    angular = exponentialInputRemap(angular, 7.5);
-
-    left_motors.move(throttle + angular);
-    right_motors.move(throttle - angular);
-}
-
-Chassis *chassis = new Chassis();
-
+Chassis chassis;
 
 void initialize() {
     pros::lcd::initialize(); // initialize brain screen
@@ -110,14 +83,6 @@ void autoMoveArm() {
         armMotor.move(0);
         armMotorCounter = -1;
 
-    } else {
-        // Move it forwards and back - this does not require a degree
-        armMotor.move(127);
-        pros::delay(250);
-        armMotor.move(-127);
-        pros::delay(800);
-        armMotor.move(0);
-        armMotorCounter = -1; // due to the arm motor being increased, set it to -1 so -1 + 1 = 0
     }
     armMotorCounter++;
     nomovearm = false;
@@ -227,7 +192,7 @@ void opcontrol() {
 
         // Function to move the robot
 
-        chassis->arcade(leftY, rightX);
+        chassis.arcade(leftY, rightX);
 
 
         // A code that does not work but it is intended to detect if the flex wheel intake/chain is "stuck" and therefore should be moved backwards a bit

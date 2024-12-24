@@ -54,7 +54,8 @@
 // using namespace pros;
 // using namespace pros::literals;
 // using namespace okapi;
-
+#ifndef FUNCTIONS
+#define FUNCTIONS
 class Chassis {
     public:
         void moveForwards(int inches);
@@ -63,6 +64,7 @@ class Chassis {
         void arcade(int throttle, int angular);
         void setBrakeHold();
         void setBrakeCoast();
+        Chassis() {};
 };
 
 inline pros::MotorGroup left_motors({-20, -18, -17}, pros::MotorGearset::blue);
@@ -82,6 +84,7 @@ inline pros::Rotation verticalTracking(15);
 inline pros::Rotation horizontalTracking(15);
 
 inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
+#endif
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
