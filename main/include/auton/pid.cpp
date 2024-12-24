@@ -1,11 +1,8 @@
 #include "main.h"
-#include "globals.h"
 
 int p = 10;
 int i = 0;
 int d = 2;
-
-right_motors.move();
 
 
 void moveForwards(){
@@ -13,7 +10,6 @@ void moveForwards(){
     // tracking is 2 inch
 
     // first find error between current position and desired position
-    int error = 
-
+    int error = 2;
     // u(t) = p * 
 }
