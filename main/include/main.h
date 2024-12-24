@@ -25,6 +25,8 @@
  * E_CONTROLLER_MASTER is pedantically correct within the PROS styleguide, but
  * not convenient for most student programmers.
  */
+#include "pros/adi.hpp"
+#include "pros/motor_group.hpp"
 #define PROS_USE_SIMPLE_NAMES
 
 /**
@@ -53,20 +55,33 @@
 // using namespace pros::literals;
 // using namespace okapi;
 
-extern pros::MotorGroup left_motors;
-extern pros::MotorGroup right_motors;
+class Chassis {
+    public:
+        void moveForwards(int inches);
+        void turnToHeading(int degrees);
 
-extern pros::Motor flexWheelIntake;
+        void arcade(int throttle, int angular);
+        void setBrakeHold();
+        void setBrakeCoast();
+};
 
-extern pros::Imu imu;
+inline pros::MotorGroup left_motors({-20, -18, -17}, pros::MotorGearset::blue);
+inline pros::MotorGroup right_motors({10, 8, 7}, pros::MotorGearset::blue);
 
-extern pros::MotorGroup armMotors;
+inline pros::Motor flexWheelIntake(5, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees);
 
-extern pros::adi::DigitalOut mogo;
-extern pros::adi::DigitalOut doinker;
-extern pros::adi::DigitalOut intakePison;
+inline pros::Imu imu(12);
 
-extern pros::Rotation vs;
+inline pros::Motor armMotor(4, pros::MotorGearset::rpm_600, pros::MotorEncoderUnits::degrees);
+
+inline pros::adi::DigitalOut mogo('A');
+inline pros::adi::DigitalOut doinker('B');
+
+inline pros::Rotation verticalTracking(15);
+
+inline pros::Rotation horizontalTracking(15);
+
+inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure

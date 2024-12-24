@@ -7,10 +7,12 @@ extern pros::Motor flexWheelIntake;
 
 extern pros::Imu imu;
 
-extern pros::MotorGroup armMotors;
+extern pros::Motor armMotor;
 
 extern pros::adi::DigitalOut mogo;
 extern pros::adi::DigitalOut doinker;
 extern pros::adi::DigitalOut intakePison;
 
 extern pros::Rotation vs;
+
+extern pros::Controller controller;
