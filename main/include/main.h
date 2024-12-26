@@ -84,8 +84,30 @@ inline pros::Rotation verticalTracking(15);
 inline pros::Rotation horizontalTracking(15);
 
 inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
+
+void autoMoveArm();
 #endif
 
+#ifndef VARIABLES
+#define VARIABLES
+
+extern int armMotorCounter;
+
+extern bool nomoveflex;
+extern bool nomovearm;
+
+// Set a bunch of values
+extern bool fwSwitch; // Flex Wheel intake SWITCH
+extern bool mogoValue; // Mogo Value switch
+extern bool doinkerValue;
+extern bool intakeValue;
+extern int debugStatCount;
+extern bool goDetectRing;
+extern bool yesdr;
+extern bool usebrake ;
+extern bool manualarm;
+extern int flexwheelstuckamt;
+#endif
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
  * that they can be called from user code (i.e. calling autonomous from a

@@ -40,53 +40,6 @@ void competition_initialize() {
 void autonomous() {
 }
 
-pros::c::optical_rgb_s_t rgb_value;
-
-// Arm motor
-
-int armMotorCounter = 0;
-
-bool nomoveflex = false;
-bool nomovearm = false;
-void autoMoveArm() {
-    // Wall stake mech code
-    // Should be ran inside a thread because it uses delay commands which can interrupt the main while true loop
-
-    nomovearm = true;
-    // Arm motor has a gear ratio of 5 therefore we need to multiply every angle by 5
-
-    
-    if (armMotorCounter == 0) {
-        // Moves the arm to catch the ring
-        armMotor.move_relative(39.5 * 5, 120);
-    } else if (armMotorCounter == 1) {
-        // Complicated steps to push it down for the next step
-        nomoveflex = true;
-        armMotor.move(-20);
-        flexWheelIntake.move(60);
-        pros::delay(20);
-        armMotor.move(0);
-        pros::delay(150);
-        flexWheelIntake.move(0);
-        nomoveflex = false;
-    } else if (armMotorCounter == 2) {
-        // Score the ring to the wall stake by making it swing 90 degrees 
-        // Flex wheel intake should be slightly moved to prevent it from being stuck
-        // flexWheelIntake.move_relative(30, 70);
-        // armMotors.move_relative(75 * 5, 127);
-
-
-        armMotor.move(127);
-        pros::delay(600);
-        armMotor.move(-127);
-        pros::delay(800);
-        armMotor.move(0);
-        armMotorCounter = -1;
-
-    }
-    armMotorCounter++;
-    nomovearm = false;
-}
 
 // Set a bunch of values
 bool fwSwitch = 0; // Flex Wheel intake SWITCH
@@ -100,24 +53,12 @@ bool usebrake = true;
 bool manualarm = false;
 int flexwheelstuckamt = 0;
 
-bool hangbool = false;
-void hang() {
-    hangbool = !hangbool;
-    if (hangbool) {
-        armMotor.move_relative(160 * 5, 127);
-        armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    } else {
-        armMotor.move_relative(-160 * 5, 127);
-    }
- 
-}
-
 // Driver code
 void opcontrol() {
 
     
     // Before the while true loop, set the arm motor to brake mode instead of coast to prevent slipping
-    armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    armMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     
 
     // Main while true loop
@@ -172,10 +113,6 @@ void opcontrol() {
         if (x) {
             manualarm = !manualarm;
             controller.print(2, 0, "Manual Arm %s", doinkerValue ? "ON" : "OFF");
-
-        }
-        if (upArrow) {
-            pros::Task armmotorhangtask(&hang);
 
         }
         // If disconnected, set the bot to be hold mode just in case
