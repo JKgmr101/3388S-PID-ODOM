@@ -68,7 +68,7 @@ class Chassis {
 };
 
 inline pros::MotorGroup left_motors({-20, -18, -17}, pros::MotorGearset::blue);
-inline pros::MotorGroup right_motors({10, 8, 7}, pros::MotorGearset::blue);
+inline pros::MotorGroup right_motors({10, 8, 9}, pros::MotorGearset::blue);
 
 inline pros::Motor flexWheelIntake(5, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees);
 

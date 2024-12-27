@@ -4,6 +4,9 @@ Chassis chassis;
 
 void initialize() {
     pros::lcd::initialize(); // initialize brain screen
+
+    
+    armMotor.set_zero_position_all(0);
 }
 
 void disabled() {}
@@ -110,9 +113,14 @@ void opcontrol() {
             controller.print(2, 0, "Brake Mode: %s", usebrake ? "Hold" : "None");
   
         }
-        if (x) {
-            manualarm = !manualarm;
-            controller.print(2, 0, "Manual Arm %s", doinkerValue ? "ON" : "OFF");
+        if (x && !manualarm) {
+            manualarm = true;
+            controller.print(2, 0, "Manual Arm %s", manualarm ? "ON" : "OFF");
+
+        } else if (x && manualarm){
+            manualarm = false;
+            armMotor.set_zero_position(0);
+            controller.print(2, 0, "Manual Arm %s", manualarm ? "ON" : "OFF");
 
         }
         // If disconnected, set the bot to be hold mode just in case
