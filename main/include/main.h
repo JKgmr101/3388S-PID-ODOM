@@ -58,13 +58,18 @@
 #define FUNCTIONS
 class Chassis {
     public:
-        void moveForwards(int inches);
-        void turnToHeading(int degrees);
-
         void arcade(int throttle, int angular);
         void setBrakeHold();
         void setBrakeCoast();
-        Chassis() {};
+};
+
+class PID : public Chassis {
+    public:
+        void moveForwards(int inches, int timeout, int fowards=true);
+        void turnToHeading(int degrees, int timout);
+    
+    private:
+        void compute(int error);
 };
 
 inline pros::MotorGroup left_motors({-20, -18, -17}, pros::MotorGearset::blue);

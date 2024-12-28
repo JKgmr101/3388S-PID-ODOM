@@ -1,5 +1,4 @@
 #include "main.h"
-#include "pros/motors.h"
 
 int sign(int num){
     if (num == 0) return 0;
@@ -13,7 +12,7 @@ float lateralInputRemap(float input, float scale) {
         };
 
 
-        return (127.0-10.0)/127.0 * (eq1(input, scale) * 127.0/(eq1(127, scale))) + 5*sign(input);
+        return (127.0-10.0)/127.0 * (eq1(input, scale) * 127.0/(eq1(127, scale)));
     }
 	return input;
 }
