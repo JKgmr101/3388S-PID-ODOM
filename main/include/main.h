@@ -61,15 +61,56 @@ class Chassis {
         void arcade(int throttle, int angular);
         void setBrakeHold();
         void setBrakeCoast();
+
+        void getRotationsFromEncoderLeft();
+        void getRotationsFromEncoderRight();
+
+        void moveForwards(int inches, int timeout, int fowards=true);
+        void turnToHeading(int degrees, int timeout);
+
+        float compute(float destination, float currentDistance);
+        float isSettled();
+
+        int timeSpent = 0;
+        int loopTime = 20
 };
 
-class PID : public Chassis {
+class lateralPID : public Chassis {
     public:
-        void moveForwards(int inches, int timeout, int fowards=true);
-        void turnToHeading(int degrees, int timout);
-    
+        lateralPID(int k, int i, int d){
+            kp = k;
+            ki = i;
+            kd = d;
+        }
+
+        int getP() { return kp; }
+        int getI() { return ki; }
+        int getD() { return kd; }
+
+        void setPrevError(int error) { prevError = error; }
+        float getPrevError() { return prevError; }
+
     private:
-        void compute(int error);
+        int kp, ki, kd, prevError;
+};
+
+class angularPID : public Chassis {
+    public:
+        angularPID(int k, int i, int d){
+            kp = k;
+            ki = i;
+            kd = d;
+        }
+
+        int getP() { return kp; }
+        int getI() { return ki; }
+        int getD() { return kd; }
+
+        void setPrevError(int error) {prevError = error; }
+        float getPrevError() { return prevError; }
+
+    private:
+        int kp, ki, kd, prevError;
 };
 
 inline pros::MotorGroup left_motors({-20, -18, -17}, pros::MotorGearset::blue);

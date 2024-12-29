@@ -2,11 +2,16 @@
 
 Chassis chassis;
 
+
+
+
 void initialize() {
     pros::lcd::initialize(); // initialize brain screen
 
     
     armMotor.set_zero_position_all(0);
+
+    
 }
 
 void disabled() {}
@@ -177,7 +182,7 @@ void opcontrol() {
         // Delay to save resources. This also makes sure that code runs properly (e.g. 10 ticks = 100 milliseconds)
         pros::delay(10);
 
-
+        
 
         // Debug
         debugStatCount++;

@@ -39,8 +39,6 @@ void Chassis::arcade(int throttle, int angular){
     right_motors.move(throttle - angular);
 }
 
-
-
 // Arm motor
 
 int armMotorCounter = 0;
